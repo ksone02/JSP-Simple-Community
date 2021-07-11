@@ -12,7 +12,7 @@ public class UserDAO {
 	
 	public UserDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/BBS?serverTimezone=UTC";
+			String dbURL = "jdbc:mysql://localhost:3306/BBS?serverTimezone=Asia/Seoul";
 			String dbID = "root";
 			String dbPassword = "kimdongho99";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -23,7 +23,7 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		String SQL = "SELECT userPassword FROM user WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -42,7 +42,7 @@ public class UserDAO {
 	}
 	
 	public int join(User user) {
-		String SQL = "INSERT INTO USER (userID, userPassword, userName, userGender, userEmail) VALUES (?,?,?,?,?)";
+		String SQL = "INSERT INTO user (userID, userPassword, userName, userGender, userEmail) VALUES (?,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -53,12 +53,7 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {if(conn != null) {conn.close();}} catch (Exception ex) {ex.printStackTrace();}
-			try {if(rs != null)   {rs.close();}}   catch (Exception ex) {ex.printStackTrace();}
-			try {if(pstmt != null){pstmt.close();}}catch (Exception ex) {ex.printStackTrace();}
 		}
 		return -1; // 데이터베이스 오류
 	}
-	
 }
